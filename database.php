@@ -1,5 +1,5 @@
 <?php
-$host = '127.0.0.1'; // 数据库主机
+$host = 'db'; // 数据库主机
 $dbname = 'encryptDB';  // 数据库名称
 $username = 'bachang';  // 数据库用户名
 $password = '1234567';      // 数据库密码

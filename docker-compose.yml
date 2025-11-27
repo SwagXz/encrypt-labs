@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"  # 将宿主机的 8080 端口映射到容器的 80 端口
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html # 挂载当前目录，这样修改代码会实时生效
+    networks:
+      - encrypt-net
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: encryptDB
+      MYSQL_USER: bachang
+      MYSQL_PASSWORD: 1234567
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      # 将源码中的 sql 文件挂载到数据库初始化目录，容器启动时会自动导入数据
+      - ./encryptDB.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - encrypt-net
+
+networks:
+  encrypt-net:
+    driver: bridge
